@@ -1,6 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const StreamZip = require('node-stream-zip');
+const { info } = require("console");
 const parseString = require('xml2js').parseString;
 const Iconv = require('iconv').Iconv;
 
@@ -16,7 +17,43 @@ Promise.all(booksPromised).then(booksArray => {
         // Планировал сгрупировать по автору в booksMap
         // Далее планировал отсортировать уже внутри booksMap или что-то такое
         // Всё, что в рамках Promise.all ниже этого комментария - дописано после отмеченных четырёх часов, если там вообще что-то будет
+        const info = bookObj.FictionBook.description[0]["title-info"][0];
+        const author = info.author[0]["first-name"] + " " + info.author[0]["last-name"];
+        const title = info["book-title"][0];
+
+        let thisAuthorBooks = [];
+        if (booksMap.has(author)) {
+            thisAuthorBooks = booksMap.get(author);
+        } else {
+            booksMap.set(author, thisAuthorBooks);
+        }
+
+        // Book title sorting
+        const firstBookOfAuthor = thisAuthorBooks[0];
+        if (firstBookOfAuthor && title <= firstBookOfAuthor.title) {
+            thisAuthorBooks.unshift({ title, bookPath });
+        } else {
+            thisAuthorBooks.push({ title, bookPath });
+        }
     })
+    const booksArrAuthorSorted = [...booksMap.entries()].sort(([authorA, booksA], [authorB, booksB]) => {
+        if (authorA < authorB) {
+            return -1;
+        }
+        return 1;
+    });
+    booksArrAuthorSorted.forEach(([author, books]) => {
+        console.log(`Author: ${author}`);
+        console.log("  Books:");
+        books.forEach((book, index, books) => {
+            console.log(`    title: ${book.title}`);
+            console.log(`    path: ${book.bookPath}`);
+            if (index !== books.length - 1) {
+                console.log("    ===========");
+            };
+        });
+    })
+    // Закончил. Превысил время на 45 минут.
 });
 
 function getBookContentPromised(bookPath) {
