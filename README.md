@@ -1,17 +1,9 @@
-# Korus Consulting CIS Javascript test 2
+# Korus Consulting CIS Javascript test 3
 ## Downloading
 ```shell
-git clone https://github.com/myalkleon/korus-test2.git && cd ./korus-test2
+git clone https://github.com/myalkleon/korus-test3.git && cd ./korus-test3
 ```
 ## Running
 ```shell
 npm run start
-```
-or
-```shell
-node index.js
-```
-or
-```shell
-node index.js [1-12]
 ```
