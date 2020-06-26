@@ -1,0 +1,12 @@
+{
+  "name": "korus-test3",
+  "version": "1.0.0",
+  "description": "```shell git clone https://github.com/myalkleon/korus-test2.git && cd ./korus-test2 ``` ## Running ```shell npm run start ``` or ```shell node index.js ``` or ```shell node index.js [1-12] ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
